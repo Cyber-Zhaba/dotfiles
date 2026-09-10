@@ -189,6 +189,7 @@ link_all() {
   link fish/config.fish       "$CONFIG/fish/config.fish"
   link fish/conf.d/theme.fish "$CONFIG/fish/conf.d/theme.fish"
   link fish/conf.d/compat.fish "$CONFIG/fish/conf.d/compat.fish"
+  link fish/conf.d/path.fish  "$CONFIG/fish/conf.d/path.fish"
 
   if [[ ! -f $CONFIG/fish/local.fish ]]; then
     cp "$DOTFILES/fish/local.fish.example" "$CONFIG/fish/local.fish"
@@ -235,8 +236,13 @@ install_nvim_tarball() {
   fi
   ln -sf "$dir/bin/nvim" "$HOME/.local/bin/nvim"
   log "Installed neovim $("$dir/bin/nvim" --version | head -1 | awk '{print $2}') to ~/.local/bin/nvim"
-  info "make sure ~/.local/bin comes before /usr/bin in PATH"
   PATH="$HOME/.local/bin:$PATH"
+  hash -r 2>/dev/null || true
+  # fish picks this up from conf.d/path.fish; other shells need their own entry.
+  if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+    warn "put ~/.local/bin ahead of /usr/bin in PATH, or the old neovim keeps winning"
+  fi
+  info "fish gets ~/.local/bin from conf.d/path.fish; other shells need it in their own rc"
 }
 
 check_versions() {
@@ -295,11 +301,17 @@ check_versions() {
 install_plugins() {
   command -v nvim >/dev/null 2>&1 || { warn "skipping plugin install, no nvim"; return; }
   command -v git  >/dev/null 2>&1 || { warn "skipping plugin install, no git"; return; }
+  local nv
+  nv="$(version_of nvim || true)"
+  if [[ -n $nv ]] && version_lt "$nv" "$NVIM_MIN"; then
+    warn "neovim on PATH is $nv (< $NVIM_MIN); not starting it -- LazyVim would block on a prompt"
+    return
+  fi
   log "Restoring nvim plugins at their locked versions"
   # restore, not sync: honour lazy-lock.json so every machine gets one set of
   # plugin revisions. Treesitter parsers need a C compiler and may fail alone.
   local out status=0
-  out="$(nvim --headless "+Lazy! restore" +qa 2>&1)" || status=$?
+  out="$(timeout 900 nvim --headless "+Lazy! restore" +qa </dev/null 2>&1)" || status=$?
   [[ -n $out ]] && printf '%s\n' "$out" | tail -5 | sed 's/^/    /'
   if (( status == 0 )); then
     info "done"

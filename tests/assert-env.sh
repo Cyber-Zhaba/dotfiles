@@ -5,6 +5,15 @@ set -uo pipefail
 
 CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"
 DOTFILES="${DOTFILES:-$HOME/dotfiles}"
+
+# conf.d/path.fish prepends this for fish; mirror it so these checks exercise
+# the binaries a real session gets rather than whatever /usr/bin holds.
+[ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
+
+# Any nvim invocation here could meet a blocking prompt (LazyVim on a too-old
+# neovim does exactly that), which in --headless is indistinguishable from a
+# hang. Cap every one of them.
+nvim() { timeout 300 command nvim "$@" </dev/null; }
 pass=0
 fail=0
 
@@ -72,6 +81,9 @@ fi
 printf '\n--- neovim ---\n'
 if command -v nvim >/dev/null 2>&1; then
   printf '  info  %s\n' "$(nvim --version | head -1)"
+  nv="$(nvim --version | head -1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)"
+  check "neovim on PATH is at least 0.11 (LazyVim requires it)" \
+    '[ "$(printf "0.11.0\n%s\n" "$nv" | sort -V | head -1)" = "0.11.0" ]'
   nvim --headless -c 'qa' >/tmp/nvim-out 2>&1; nvim_status=$?
   check "starts and exits cleanly"  '[ "$nvim_status" -eq 0 ]'
   if sed 's/\x1b\[[0-9;]*m//g' /tmp/nvim-out | grep -qE '(^|[[:space:]])E[0-9]{1,4}:|Error executing|stack traceback'; then
