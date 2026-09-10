@@ -1,0 +1,18 @@
+# ~/.config/fish/local.fish -- machine-specific, NOT tracked in the dotfiles repo.
+# install.sh drops this template here on a fresh box. Uncomment what applies.
+
+# goenv
+# set -x GOENV_ROOT $HOME/.goenv
+# fish_add_path $GOENV_ROOT/bin
+# status is-interactive; and source (goenv init -|psub)
+# set -x GOENV_AUTOMATICALLY_DETECT_VERSION 1
+
+# pnpm
+# set -gx PNPM_HOME $HOME/.local/share/pnpm
+# fish_add_path $PNPM_HOME
+
+# opencode
+# fish_add_path $HOME/.opencode/bin
+
+# uv / other installers that ship a fish env file
+# test -f $HOME/.local/bin/env.fish; and source $HOME/.local/bin/env.fish

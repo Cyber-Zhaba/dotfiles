@@ -1,0 +1,17 @@
+# ALT Linux (apt-get over rpm). Names differ from Debian despite the same tool.
+fish
+tmux
+neovim
+git-core
+curl
+gcc
+make
+eza
+bat
+fzf
+zoxide
+ripgrep
+fd
+lazygit
+wl-clipboard
+fonts-ttf-jetbrains-mono

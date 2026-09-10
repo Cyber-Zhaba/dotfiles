@@ -1,0 +1,19 @@
+# Arch / Omarchy. One package per line; blank lines and # comments ignored.
+fish
+tmux
+neovim
+git
+curl
+gcc
+make
+eza
+bat
+fzf
+zoxide
+ripgrep
+fd
+lazygit
+wl-clipboard
+ttf-jetbrains-mono-nerd
+# acp/amv (cp/mv with progress) come from the AUR package `advcpmv`; install.sh
+# does not touch the AUR, and config.fish skips those aliases when missing.

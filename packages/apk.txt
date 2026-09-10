@@ -1,0 +1,16 @@
+# Alpine. Untested -- adjust names as you hit them.
+fish
+tmux
+neovim
+git
+curl
+build-base
+eza
+bat
+fzf
+zoxide
+ripgrep
+fd
+lazygit
+wl-clipboard
+font-jetbrains-mono-nerd

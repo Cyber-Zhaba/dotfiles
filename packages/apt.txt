@@ -1,0 +1,19 @@
+# Debian / Ubuntu (dpkg + apt). bat and fd install as batcat/fdfind here;
+# fish/conf.d/compat.fish aliases them back.
+fish
+tmux
+neovim
+git
+curl
+ca-certificates
+gcc
+make
+eza
+bat
+fzf
+zoxide
+ripgrep
+fd-find
+lazygit
+wl-clipboard
+fonts-jetbrains-mono

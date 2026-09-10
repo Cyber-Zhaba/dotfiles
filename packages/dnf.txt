@@ -1,0 +1,17 @@
+# Fedora / RHEL. lazygit needs COPR (atim/lazygit) and will be reported missing.
+fish
+tmux
+neovim
+git
+curl
+gcc
+make
+eza
+bat
+fzf
+zoxide
+ripgrep
+fd-find
+lazygit
+wl-clipboard
+jetbrains-mono-fonts

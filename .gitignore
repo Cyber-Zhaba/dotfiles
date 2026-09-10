@@ -1,0 +1,3 @@
+# local.fish lives in ~/.config/fish, never here -- this is belt and braces.
+fish/local.fish
+*.bak.*

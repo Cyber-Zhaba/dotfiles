@@ -1,0 +1,17 @@
+# openSUSE. Untested -- adjust names as you hit them.
+fish
+tmux
+neovim
+git
+curl
+gcc
+make
+eza
+bat
+fzf
+zoxide
+ripgrep
+fd
+lazygit
+wl-clipboard
+jetbrains-mono-fonts
