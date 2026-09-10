@@ -14,4 +14,7 @@ ripgrep
 fd
 lazygit
 wl-clipboard
-fonts-ttf-jetbrains-mono
+# ALT packages only two Nerd Fonts; JetBrains Mono is there but only as
+# fonts-ttf-jetbrains-mono-nl, which carries no icon glyphs. FiraCode Nerd does.
+# For JetBrains Mono Nerd specifically, ALT ships `getnf` to fetch it.
+fonts-ttf-fira-code-nerd

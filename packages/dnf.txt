@@ -1,4 +1,4 @@
-# Fedora / RHEL. lazygit needs COPR (atim/lazygit) and will be reported missing.
+# Fedora / RHEL.
 fish
 tmux
 neovim
@@ -12,6 +12,9 @@ fzf
 zoxide
 ripgrep
 fd-find
-lazygit
 wl-clipboard
+# Plain JetBrains Mono, NOT the Nerd Font patch -- eza --icons and LazyVim's
+# glyphs need a Nerd variant, which Fedora does not package. Install one by hand.
 jetbrains-mono-fonts
+# lazygit lives in COPR, not the main repos:
+#   dnf copr enable atim/lazygit && dnf install lazygit

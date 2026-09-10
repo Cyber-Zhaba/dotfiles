@@ -16,4 +16,6 @@ ripgrep
 fd-find
 lazygit
 wl-clipboard
+# Plain JetBrains Mono, NOT the Nerd Font patch -- eza --icons and LazyVim's
+# glyphs need a Nerd variant, which Debian does not package. Install one by hand.
 fonts-jetbrains-mono

@@ -12,8 +12,12 @@ DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 
 # Any nvim invocation here could meet a blocking prompt (LazyVim on a too-old
 # neovim does exactly that), which in --headless is indistinguishable from a
-# hang. Cap every one of them.
-nvim() { timeout 300 command nvim "$@" </dev/null; }
+# hang. Cap every one of them -- resolving the binary up front, because timeout
+# execs a program and so cannot run the `command` builtin.
+NVIM_BIN="$(command -v nvim 2>/dev/null || true)"
+if [ -n "$NVIM_BIN" ]; then
+  nvim() { timeout 300 "$NVIM_BIN" "$@" </dev/null; }
+fi
 pass=0
 fail=0
 
@@ -79,7 +83,7 @@ else
 fi
 
 printf '\n--- neovim ---\n'
-if command -v nvim >/dev/null 2>&1; then
+if [ -n "$NVIM_BIN" ]; then
   printf '  info  %s\n' "$(nvim --version | head -1)"
   nv="$(nvim --version | head -1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)"
   check "neovim on PATH is at least 0.11 (LazyVim requires it)" \
